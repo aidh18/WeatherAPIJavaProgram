@@ -21,7 +21,7 @@ public class WeatherApp {
      * @return Nothing.
      */
     public static void main(String[] args) {
-        System.out.println("Thank you for using our weather app.");
+        System.out.println("\nThank you for using our weather app.");
 
         String city = getCity();
         city = format(city);
@@ -32,7 +32,7 @@ public class WeatherApp {
             getJson(city);
         }
 
-        System.out.println("Have a nice day.");
+        System.out.println("\nHave a nice day.");
     }
 
     /**
@@ -92,6 +92,10 @@ public class WeatherApp {
      */
     public static String parse(String responseBody) {
         JSONObject data = new JSONObject(responseBody);
+        if (data.has("error")) {
+            System.out.println("That city is not in the database.");
+            return null;
+        }
         JSONObject location = data.getJSONObject("location");
         JSONObject current = data.getJSONObject("current");
 
@@ -103,7 +107,7 @@ public class WeatherApp {
         String windDir = current.getString("wind_dir");
         double windMph = current.getDouble("wind_mph");
 
-        System.out.println("Showing results for " + place + ":\nTemperature(F) - " + tempF + "\nHumidity(%) - " +
+        System.out.println("\nShowing results for " + place + ":\nTemperature(F) - " + tempF + "\nHumidity(%) - " +
                 humidity + "\nWind Speed(MPH) - " + windMph + "\nWind Direction - " + windDir +
                 "\nPrecipitation(In) - " + precipIn + "\nVisibility(Miles) - " + visMiles);
 
@@ -116,7 +120,7 @@ public class WeatherApp {
      */
     public static boolean repeat() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Would you like to look at another city(Y or N)? ");
+        System.out.println("\nWould you like to look at another city(Y or N)? ");
         char answer = Character.toUpperCase(scanner.nextLine().charAt(0));
         if (answer == 'Y') {
             return true;
